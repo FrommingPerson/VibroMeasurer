@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
+import {DataService} from "../../../../data.service";
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -9,5 +10,7 @@ export class HeaderComponent {
 
   toggle() {
     this.toggleModal.emit();
+  }
+  constructor(public data: DataService) {
   }
 }

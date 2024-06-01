@@ -1,1 +1,16 @@
-<p>settings works!</p>
+<div class="dark:bg-slate-800 h-screen">
+<p class="text-4xl dark:text-white text-black text-center p-5">Настройки</p>
+<div class="p-6">
+  <div class="flex gap-4 flex-col">
+    <p class="dark:text-white text-2xl text-black">
+      <mat-slide-toggle (change)="toggel()" [checked]="data.array[data.array.length - 2]"  labelPosition="before"></mat-slide-toggle>&nbsp; Темная тема
+    </p>
+    <p class="dark:text-white text-2xl text-black">
+      <mat-slide-toggle (change)="onOrOff()" [checked]="data.offon[data.offon.length -1]" labelPosition="before"></mat-slide-toggle>&nbsp; Выкл/Вкл
+    </p>
+    <p class="dark:text-white text-2xl text-black">
+      <mat-slide-toggle (change)="charts()"  [checked]="data.arr[data.arr.length - 1]" labelPosition="before"></mat-slide-toggle>&nbsp; Остальные графики
+    </p>
+  </div>
+</div>
+</div>

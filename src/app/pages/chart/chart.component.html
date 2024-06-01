@@ -1,0 +1,10 @@
+<div class="relative dark:bg-slate-800  dark:text-white h-screen">
+  <apx-chart class="m-3.5 text"
+             *ngIf="chartOptions"
+             [series]="chartOptions.series!"
+             [chart]="chartOptions.chart!"
+             [xaxis]="chartOptions.xaxis!"
+             [title]="chartOptions.title!">
+  </apx-chart>
+</div>
+

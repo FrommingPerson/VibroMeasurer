@@ -1,15 +1,9 @@
-<router-outlet />
-<div class="relative">
+<router-outlet class="dark:bg-slate-800" />
+<div class="relative dark:bg-slate-800">
 <app-header (toggleModal)="toggleModal()" />
-<apx-chart class="m-3.5"
-  [series]="series"
-  [chart]="chart"
-  [xaxis]="xaxis"
-  [yaxis]="yaxis"
-  [title]="title">
-</apx-chart>
-<div (click)="toggleModal()" *ngIf="isModalOpened" class="z-50 absolute top-0 text-black w-screen h-screen bg-white/40 backdrop-blur-md dark:bg-green-500 flex flex-row justify-center content-center items-center px-5 py-3">
-  <div (click)="$event.stopPropagation()" class="grid grid-cols-3 gap-4 p-8 bg-white rounded-2xl shadow-xl">
+
+<div (click)="toggleModal()" *ngIf="isModalOpened" class="z-50 absolute top-0 text-black w-screen h-screen bg-white/40 backdrop-blur-md dark:bg-green-500/40 flex flex-row justify-center content-center items-center px-5 py-3">
+  <div (click)="$event.stopPropagation()" class="dark:bg-gray-600 grid grid-cols-3 gap-4 p-8 bg-white rounded-2xl shadow-xl">
     <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph1</button>
     <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph2</button>
     <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph3</button>
@@ -18,5 +12,6 @@
     <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph6</button>
   </div>
 </div>
-</div>
 
+</div>
+<router-outlet />
