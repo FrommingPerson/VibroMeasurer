@@ -10,23 +10,25 @@ import {AppRoutingModule} from "./app-routing.module";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import {MatButton} from "@angular/material/button";
-import { ChartComponent } from './pages/chart/chart.component';
-import {DataService} from "../../data.service";
+import { MainChartComponent } from './pages/chart/main-chart.component';
+import {SettingsService} from "../../settings.service";
 import {SensorService} from "../sevices/sensor.service";
 import {HttpClientModule,HttpClient} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { DatePipe } from '@angular/common'
+import {DeviceService} from "../sevices/device.service";
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SettingsComponent, ChartComponent, AppComponent],
+  declarations: [AppComponent, HeaderComponent, SettingsComponent, MainChartComponent, AppComponent],
   imports: [BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     NgApexchartsModule,HttpClientModule, MatSlideToggleModule, RouterModule.forRoot([]), BrowserModule, NgApexchartsModule, RouterOutlet, RouterLinkActive, RouterLink, AppRoutingModule, MatButton],
   providers: [
     provideAnimationsAsync(),
-    DataService,
+    SettingsService,
     SensorService,
+    DeviceService,
     HttpClient,
     HttpClientModule,
     DatePipe

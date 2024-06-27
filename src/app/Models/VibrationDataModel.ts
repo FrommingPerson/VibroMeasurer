@@ -1,5 +1,6 @@
 export interface VibrationDataModel {
   id: number,
+  deviceId: number,
   axMin: number,
   axAvg: number,
   axMax: number,

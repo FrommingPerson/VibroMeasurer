@@ -8,8 +8,11 @@ import {
   ApexYAxis,
   ApexTitleSubtitle,
 } from "ng-apexcharts";
-import {DataService} from "../../data.service";
+import {SettingsService} from "../../settings.service";
 import {data} from "autoprefixer";
+import {DeviceService} from "../sevices/device.service";
+import {DeviceDataModel} from "./Models/DeviceDataModel";
+import {SettingsDataModel} from "./Models/SettingsDataModel";
 
 @Component({
   selector: 'app-root',
@@ -18,10 +21,8 @@ import {data} from "autoprefixer";
 })
 export class AppComponent {
 
-  darkMode = signal<boolean>(false);
-
-  @HostBinding('class.dark') get mode() {
-    return this.data.array[this.data.array.length - 1];
+  @HostBinding('class.dark') get darkTheme() {
+    return this.settings.darkMode;
   }
 
   @HostListener('window:keyup.escape', ['$event']) escape(e: KeyboardEvent) {
@@ -32,74 +33,33 @@ export class AppComponent {
 
   }
 
-    // theme = localStorage.getItem('theme');
-
-  public series!: ApexAxisChartSeries;
-  public chart!: ApexChart;
-  public xaxis!: ApexXAxis;
-  public yaxis!: ApexYAxis;
-  public title!: ApexTitleSubtitle;
-
-  constructor(private router: Router, private data: DataService) {
-    this.initChart();
-  }
-
+  devices: DeviceDataModel[] = [];
   isZoomed = true;
   isModalOpened = false;
+
+
+  protected settings: SettingsDataModel = {
+    darkMode: false,
+    enabled: true,
+    charts: true,
+    themeMode: "light",
+    color: undefined
+  }
+
+  constructor(private router: Router, private _settingsService: SettingsService, private _deviceService: DeviceService) {
+    this._settingsService.settings$.subscribe(settings => this.settings = settings);
+    this._deviceService.devices$.subscribe(x => this.devices = x);
+    this._deviceService.getAllDevices().subscribe();
+  }
 
   toggleModal() {
     this.isModalOpened = !this.isModalOpened;
     // console.log(`From the child component: ${this.data.arr[this.data.arr.length - 1]}`);
   }
-  resize($event: string) {
-    this.isZoomed = !this.isZoomed;
-    let localChart = {...this.chart};
-    localChart.height = this.isZoomed ? 590 : 526;
-    this.chart = {...this.chart, ...localChart}
-    console.log(this.chart.height);
+
+  selectDevice(device: DeviceDataModel) {
+    this._deviceService.selectDevice(device);
   }
-
-
-  initChart(): void {
-    this.series = [{
-      name: "Максимальный показатель",
-      data: [16, 46, 35, 51, 46, 62, 66, 91, 168],
-    },
-      {
-        name: "Средний показатель",
-        data: [6, 31, 56, 41, 41, 26, 76, 11, 46],
-      },
-      {
-        name: "Минимаьный показатель",
-        data: [20, 21, 75, 41, 39, 42, 29, 11, 9],
-      }];
-    this.chart = {
-      type: "line",
-      height: 590,
-      zoom: {
-        enabled: true,
-        type: 'x', // Можно выбрать 'x', 'y' или 'xy' для масштабирования по соответствующим осям
-      },
-      toolbar: {
-        autoSelected: 'zoom' // Позволяет автоматически выбирать инструмент зума
-      }
-    };
-    this.xaxis = {
-      categories: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен"]
-    };
-    this.yaxis = {
-      title: {
-        text: "Значения"
-      }
-    };
-    this.title = {
-      text: "Показатели вибрации",
-      align: "center"
-    };
-  }
-
-  protected readonly event = event;
-  protected readonly console = console;
 }
 
 

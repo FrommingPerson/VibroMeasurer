@@ -3,13 +3,13 @@
 <div class="p-6">
   <div class="flex gap-4 flex-col">
     <p class="dark:text-white text-2xl text-black">
-      <mat-slide-toggle (change)="toggel()" [checked]="data.array[data.array.length - 2]"  labelPosition="before"></mat-slide-toggle>&nbsp; Темная тема
+      <mat-slide-toggle (change)="_settingsService.toggleDarkMode()" [checked]="settings.darkMode"  labelPosition="before"></mat-slide-toggle>&nbsp; Темная тема
     </p>
     <p class="dark:text-white text-2xl text-black">
-      <mat-slide-toggle (change)="onOrOff()" [checked]="data.offon[data.offon.length -1]" labelPosition="before"></mat-slide-toggle>&nbsp; Выкл/Вкл
+      <mat-slide-toggle (change)="_settingsService.toggleEnabled()" [checked]="settings.enabled" labelPosition="before"></mat-slide-toggle>&nbsp; Выкл/Вкл
     </p>
     <p class="dark:text-white text-2xl text-black">
-      <mat-slide-toggle (change)="charts()"  [checked]="data.arr[data.arr.length - 1]" labelPosition="before"></mat-slide-toggle>&nbsp; Остальные графики
+      <mat-slide-toggle (change)="_settingsService.toggleCharts()"  [checked]="settings.charts" labelPosition="before"></mat-slide-toggle>&nbsp; Остальные графики
     </p>
   </div>
 </div>

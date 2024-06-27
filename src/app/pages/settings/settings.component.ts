@@ -1,8 +1,10 @@
 import {Component, HostBinding, OnDestroy, OnInit, signal} from '@angular/core';
-import {DataService} from "../../../../data.service";
+import {SettingsService} from "../../../../settings.service";
 import {VibrationDataModel} from "../../Models/VibrationDataModel";
 import {SensorService} from "../../../sevices/sensor.service";
 import moment from "moment";
+import {data} from "autoprefixer";
+import {SettingsDataModel} from "../../Models/SettingsDataModel";
 
 @Component({
   selector: 'app-settings',
@@ -12,20 +14,28 @@ import moment from "moment";
 
 
 export class SettingsComponent implements OnInit {
-  constructor(public data: DataService, public http: SensorService) {
+
+  protected settings: SettingsDataModel = {
+    darkMode: false,
+    enabled: true,
+    charts: true,
+    themeMode: "light",
+    color: undefined,
+  }
+  constructor(
+    protected readonly _settingsService: SettingsService,
+    private readonly _sensorService: SensorService,
+  ) {
     console.log(data);
   }
 
   ngOnInit() {
+    this._settingsService.settings$.subscribe(settings => this.settings = settings);
     this.getData();
   }
 
-  darkMode = signal<boolean>(false);
-
-  count: boolean = false;
-
   getData() {
-    this.http.getData().subscribe({
+    this._sensorService.getData().subscribe({
       next: (data) => {
         console.log(data);
         let information = <VibrationDataModel>data;
@@ -34,30 +44,4 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  toggel() {
-    this.darkMode.set(!this.darkMode());
-    console.log(`The true dark mode: ${this.darkMode}`);
-    this.count = !this.count;
-    this.data.nextCount(this.count);
-    this.data.nextCount(this.darkMode);
-    if (!this.count) {
-      location.reload();
-    }
-    console.log(`From the child component: ${this.data.array}`);
-  }
-
-  isCharts: boolean = this.data.arr[this.data.arr.length - 1];
-  isOn: boolean = this.data.offon[this.data.offon.length -1];
-
-  charts() {
-    this.isCharts = !this.isCharts;
-    console.log(this.isCharts);
-    this.data.add(this.isCharts);
-  }
-
-  onOrOff() {
-    this.isOn = !this.isOn;
-    this.data.adding(this.isOn);
-    console.log(this.data.offon);
-  }
 }

@@ -1,17 +1,39 @@
-<router-outlet class="dark:bg-slate-800" />
+<router-outlet class="dark:bg-slate-800"/>
 <div class="relative dark:bg-slate-800">
-<app-header (toggleModal)="toggleModal()" />
+  <app-header (toggleModal)="toggleModal()"/>
 
-<div (click)="toggleModal()" *ngIf="isModalOpened" class="z-50 absolute top-0 text-black w-screen h-screen bg-white/40 backdrop-blur-md dark:bg-green-500/40 flex flex-row justify-center content-center items-center px-5 py-3">
-  <div (click)="$event.stopPropagation()" class="dark:bg-gray-600 grid grid-cols-3 gap-4 p-8 bg-white rounded-2xl shadow-xl">
-    <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph1</button>
-    <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph2</button>
-    <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph3</button>
-    <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph4</button>
-    <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph5</button>
-    <button class="p-4 rounded-3xl border-s-gray-300 border-2 bg-orange-400 text-white hover:bg-white hover:text-black transition-colors">Graph6</button>
+  <div (click)="toggleModal()" *ngIf="isModalOpened"
+       class="z-50 absolute top-0 text-black w-screen h-screen bg-gray-500/40 backdrop-blur-md dark:bg-gray-800/40 flex flex-row justify-center content-center items-center px-5 py-3">
+    <div (click)="$event.stopPropagation()"
+         class="grid grid-cols-3 gap-4">
+      <div (click)="selectDevice(device)"
+           class="dark:bg-gray-900 dark:text-white dark:shadow-blue-200 dark:shadow p-4 h-40 w-60 rounded-md shadow-2xl flex flex-col gap-4 text-gray-700 bg-gray-200 cursor-pointer"
+           *ngFor="let device of devices">
+
+        <div class="inline-flex justify-between items-center gap-2">
+          <span> #{{device.deviceId}}</span>
+
+          <div class="inline-flex items-center gap-2">
+            <svg [ngClass]="{'text-red-400': device.cardMountFailed, 'text-gray-400 dark:text-white': !device.cardMountFailed}"
+                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="size-5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="size-6"
+                 [ngClass]="{'text-red-400 shadow-2xl':device.signalQuality < 40, 'text-orange-400':device.signalQuality > 40 && device.signalQuality < 60, 'text-green-600':device.signalQuality > 60}">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+            </svg>
+          </div>
+        </div>
+
+        <span>{{device.ssid}}</span>
+        <span>{{device.ip}}</span>
+      </div>
+    </div>
   </div>
 </div>
-
-</div>
-<router-outlet />
+<router-outlet/>

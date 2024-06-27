@@ -30,7 +30,7 @@
       </div>
 
       <div
-        class="!visible hidden grow basis-[100%] items-center lg:!flex lg:basis-auto"
+        class="inline-flex items-center justify-between gap-2 w-full px-4"
         id="navbarSupportedContentY"
         data-te-collapse-item>
         <ul
@@ -44,7 +44,7 @@
               data-te-ripple-color="light"
             >Настройки</a>
           </li>
-          <li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref *ngIf="data.arr[data.arr.length - 1] === true">
+          <li class="mb-4 lg:mb-0 lg:pr-2" data-te-nav-item-ref *ngIf="settings.charts">
             <button (click)="toggle()"
               class="block transition duration-150 ease-in-out hover:text-red-700 focus:text-neutral-700 disabled:text-black/30 dark:hover:text-white dark:focus:text-white lg:p-2 [&.active]:text-black/90"
               data-te-nav-link-ref
@@ -61,6 +61,17 @@
             >График</a>
           </li>
         </ul>
+
+        <div class="inline-flex items-center gap-4" *ngIf="device">
+          <span>#{{device.deviceMac}}</span>
+          <span>{{device.mac}}</span>
+          <span>{{device.ip}}</span>
+          <span>{{device.rssi}}</span>
+          <span>{{device.signalQuality}}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" [ngClass]="{'text-red-600':device.signalQuality < 40, 'text-orange-600':device.signalQuality > 40 && device.signalQuality < 60, 'text-green-600':device.signalQuality > 60}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.652a3.75 3.75 0 0 1 0-5.304m5.304 0a3.75 3.75 0 0 1 0 5.304m-7.425 2.121a6.75 6.75 0 0 1 0-9.546m9.546 0a6.75 6.75 0 0 1 0 9.546M5.106 18.894c-3.808-3.807-3.808-9.98 0-13.788m13.788 0c3.808 3.807 3.808 9.98 0 13.788M12 12h.008v.008H12V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+          </svg>
+        </div>
       </div>
     </div>
   </nav>
